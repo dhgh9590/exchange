@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>exchange</title>
+
+    <link rel="stylesheet" href="css/reset.css"><!-- 리셋 css -->
+    <link rel="stylesheet" href="css/style.css"><!-- 스타일 css -->
+    <link rel="stylesheet" href="css/font-awesome.css"><!-- 폰트어썸 구버전 css -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"><!-- 폰트어썸 신버전 CDN -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet"><!-- 구글 웹폰트(Noto Sans Korean) CDN -->
+
+</head>
+<body>
+    <section>
+        <div class="exchange-box">
+            <div class="dropdown">
+                <button class="dropbtn" id="from-button">USD</button>
+                <div class="dropdown-content" id="from-currency-list">
+                    <a href="#">USD</a>
+                    <a href="#">KRW</a>
+                    <a href="#">VND</a>
+                </div>
+             </div>
+             <div class="input-area">
+                 <input type="number" id="from-input" onkeyup="convert()">
+                 <div>달러</div>
+             </div>
+        </div>
+        <h1>=</h1>
+        <div class="exchange-box">
+            <div class="dropdown">
+                <button class="dropbtn" id="to-button">USD</button>
+                <div class="dropdown-content" id="to-currency-list">
+                    <a href="#">USD</a>
+                    <a href="#">KRW</a>
+                    <a href="#">VND</a>
+                </div>
+             </div>
+             <div class="input-area">
+                 <input type="number" id="to-input">
+                 <div id="to-text">달러</div>
+             </div>
+        </div>
+    </section>
+
+    <script>
+        let currencyRatio = {
+            USD:{
+                KRW:1195.92,
+                USD:1,
+                VND:22700.00,
+                unit:"달러"
+            },
+            KRW:{
+                KRW:1,
+                USD:0.00084,
+                VND:18.99,
+                unit:"원"
+            },
+            VND:{
+                KRW:0.053,
+                USD:0.000044,
+                VND:1,
+                unit:"동"
+            }
+        };
+
+        let fromCurrency = "USD";
+        let toCurrency = "USD";
+
+        document.querySelectorAll("#from-currency-list a").forEach((event)=>{
+            event.addEventListener("click",()=>{
+                document.querySelector("#from-button").textContent = event.textContent;
+
+                fromCurrency = event.textContent;
+            });
+        });
+
+        document.querySelectorAll("#to-currency-list a").forEach((event)=>{
+            event.addEventListener("click",()=>{
+                document.querySelector("#to-button").textContent = event.textContent;
+
+                toCurrency = event.textContent;
+                convert();
+            });
+        });
+
+        function convert(){
+            let amount = document.getElementById("from-input").value;
+            let convertedAmount = amount * currencyRatio[fromCurrency][toCurrency];
+            
+            
+            document.getElementById("to-input").value = convertedAmount;
+        }
+        
+
+
+    </script>
+    
+</body>
+</html>
